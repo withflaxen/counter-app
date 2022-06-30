@@ -1,0 +1,12 @@
+.wrapper{
+  display: flex;
+  justify-content: space-around;
+  width:max-content;
+  padding: 4px;
+  background-color: crimson;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: white;
+}
+

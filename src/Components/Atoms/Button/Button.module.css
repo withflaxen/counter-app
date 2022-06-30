@@ -1,0 +1,19 @@
+.button{
+  background-color: antiquewhite;
+  cursor: pointer;
+  font-size: 16px;
+  color: gray;
+  border: none;
+  padding: 10px;
+
+}
+.button.button_rounded{
+  border-radius: 50%;
+  border: 1px solid #EE3D62FF;
+  background-color:#EE3D62FF ;
+  width: 30px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  padding: 0px;
+}

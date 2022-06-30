@@ -1,58 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useCallback } from "react";
+import "./App.css";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+import {
+  addCounter as addCounterAC,
+  deleteCounter as deleteCounterAC,
+} from "./redux/counterSlice";
+import { Button } from "./Components/Atoms";
+import { CounterItem } from "./Components/Molecules";
+
+export const App = () => {
+  const dispatch = useAppDispatch();
+
+  const counters = useAppSelector((state) => state.counter.counters);
+  const countersValues = counters.map(({ value }) => value);
+  const counterSum = countersValues.reduce((acc, current) => acc + current, 0);
+
+  const addCounter = () => {
+    dispatch(
+      addCounterAC({
+        value: counterSum,
+        initialIndex: counters.length,
+        id: Date.now().toString(),
+      })
+    );
+  };
+
+  const deleteCounter = useCallback(
+    (id: string) => dispatch(deleteCounterAC({ id })),
+    []
   );
-}
 
-export default App;
+  return (
+    <>
+      <div className={"add-counter"}>
+        <Button onClick={addCounter} text={"Add new Counter"} />
+      </div>
+      <div className={"app-counters"}>
+        {counters.map(({ id, initialIndex }) => (
+          <CounterItem
+            deleteCounter={deleteCounter}
+            id={id}
+            initialIndex={initialIndex}
+            key={id}
+          />
+        ))}
+      </div>
+    </>
+  );
+};

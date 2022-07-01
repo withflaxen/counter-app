@@ -17,7 +17,7 @@ export const Counter: FC<CounterProps> = ({ thisID, autoCount }) => {
 
   useEffect(() => {
     if (!autoCount) return;
-    const intervalID = setInterval(inc, 1000, thisID);
+    const intervalID = setInterval(inc, 1000);
     return () => {
       clearInterval(intervalID);
     };
